@@ -39,24 +39,7 @@ The pipeline extracts raw order, product, and inventory data from CSVs, validate
 
 ## Architecture
 
-       ┌──────────────────────────┐
-│        CSV Input          │
-│  (orders, products, inv)  │
-└─────────┬──────────────┘
-│
-[Extract: Pandas]
-│
-[Transform: Pydantic]
-│
-[Load: PostgreSQL/Parquet]
-│
-┌────────────────────┴────────────────────┐
-│                                         │
-│     [Airflow DAGs]      [Flask API]     │
-│   (Daily Automation)   (CRUD + Query)   │
-└────────────────────┬────────────────────┘
-│
-[SQL Analytical Reports]
+<img width="302" height="555" alt="image" src="https://github.com/user-attachments/assets/74340e17-70c8-4192-8c2e-443967936fe7" />
 
 
 
@@ -64,13 +47,13 @@ The pipeline extracts raw order, product, and inventory data from CSVs, validate
 
 ### Option 1 — Manual Setup (Recommended for Local Testing)
 
-#### **1. Install dependencies  **
+#### **1. Install dependencies**
 
 uv sync
 or with pip
 pip install -r requirements.txt
 
-####**2. Create PostgreSQL database**
+**2. Create PostgreSQL database**
 
 psql -U postgres
 CREATE DATABASE quickshop;
@@ -93,7 +76,7 @@ docker-compose up --build
 DAG Name: quickshop_daily_pipeline
 Schedule: Daily (@daily)
 
-Tasks:
+**Tasks:**
 
 Extract data from /data
 
@@ -117,10 +100,6 @@ File: dags/quickshop_daily_pipeline.py
 
 
 **Testing**
-
-Run all unit tests using pytest:
-
-🧪 Testing
 
 Run all unit tests using pytest:
 pytest -v
