@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
 from typing import Optional
 
@@ -11,13 +11,15 @@ class OrderRecord(BaseModel):
     unit_price: float
     order_total: Optional[float] = None
 
-    @validator("qty")
+    @field_validator("qty")
+    @classmethod
     def qty_non_neg(cls, v):
         if v < 0:
             raise ValueError("qty must be >= 0")
         return v
 
-    @validator("unit_price")
+    @field_validator("unit_price")
+    @classmethod
     def price_non_neg(cls, v):
         if v < 0:
             raise ValueError("unit_price must be >= 0")

@@ -3,8 +3,11 @@ from datetime import date, timedelta
 import pandas as pd
 import logging
 
-def find_order_files(input_dir, start_date, end_date):
-    """Find all order CSV files between start_date and end_date."""
+def find_order_files(input_dir, start_date, end_date, *args):
+    if len(args) >= 3:
+        start_date = f"{start_date}-{args[0]}-{args[1]}"
+        end_date = f"{args[2]}-{args[3]}-{args[4]}"
+
     start, end = pd.to_datetime(start_date).date(), pd.to_datetime(end_date).date()
     files = []
     cur = start
@@ -14,9 +17,7 @@ def find_order_files(input_dir, start_date, end_date):
             files.append(f)
         cur += timedelta(days=1)
     
-    logging.info(f"Found {len(files)} order files for date range {start} to {end}")
-    if files:
-        logging.debug(f"Order files: {files}")
+    logging.info(f"Found {len(files)} order files")
     return files
 
 def read_orders(files):
