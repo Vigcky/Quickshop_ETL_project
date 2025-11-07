@@ -21,7 +21,6 @@ def find_order_files(input_dir, start_date, end_date, *args):
     return files
 
 def read_orders(files):
-    """Read and concatenate multiple order CSV files."""
     if not files:
         logging.warning("No order files to read")
         return pd.DataFrame()
@@ -35,7 +34,6 @@ def read_orders(files):
                 logging.debug(f"Read {len(df)} rows from {f}")
             except Exception as e:
                 logging.error(f"Failed to read {f}: {e}")
-                # Continue with other files instead of failing completely
                 continue
         
         if not dfs:
@@ -50,7 +48,6 @@ def read_orders(files):
         raise
 
 def read_products(input_dir):
-    """Read products reference data."""
     f = Path(input_dir) / "products.csv"
     if not f.exists():
         logging.warning(f"Products file not found: {f}")
@@ -65,7 +62,6 @@ def read_products(input_dir):
         raise
 
 def read_inventory(input_dir):
-    """Read inventory reference data."""
     f = Path(input_dir) / "inventory.csv"
     if not f.exists():
         logging.warning(f"Inventory file not found: {f}")

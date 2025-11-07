@@ -12,7 +12,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-# 🟢 Run ETL automatically once when Flask starts
+# 🟢 
 @app.before_first_request
 def run_etl_on_startup():
     """Run ETL automatically once when Flask starts."""
@@ -26,20 +26,20 @@ def run_etl_on_startup():
             "--db-url postgresql+psycopg2://postgres:182003@postgres:5432/quickshop"
         )
         if exit_code == 0:
-            logging.info("✅ ETL completed successfully!")
+            logging.info("ETL completed successfully!")
         else:
-            logging.error("❌ ETL failed with exit code %s", exit_code)
+            logging.error("ETL failed with exit code %s", exit_code)
 
     threading.Thread(target=run_etl, daemon=True).start()
 
 
-# 🩺 Health Check
+# Health Check
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"}), 200
 
 
-# 🔵 Get all orders
+# 🔵 
 @app.route("/orders", methods=["GET"])
 def get_orders():
     session = SessionLocal()
@@ -58,13 +58,13 @@ def get_orders():
         ]
         return jsonify(result), 200
     except Exception as e:
-        logging.error(f"❌ Error fetching orders: {e}")
+        logging.error(f"Error fetching orders: {e}")
         return jsonify({"error": str(e)}), 500
     finally:
         session.close()
 
 
-# 🟢 Add new order
+# 🟢 
 @app.route("/order", methods=["POST"])
 def add_order():
     data = request.get_json()
@@ -86,13 +86,13 @@ def add_order():
         }), 201
     except Exception as e:
         session.rollback()
-        logging.error(f"❌ Error adding order: {e}")
+        logging.error(f"Error adding order: {e}")
         return jsonify({"error": str(e)}), 400
     finally:
         session.close()
 
 
-# 🟡 Update existing order
+# 🟡 
 @app.route("/orders/<int:order_id>", methods=["PUT"])
 def update_order(order_id):
     data = request.get_json()
@@ -118,7 +118,7 @@ def update_order(order_id):
         session.close()
 
 
-# 🔴 Delete order
+# 🔴 
 @app.route("/orders/<int:order_id>", methods=["DELETE"])
 def delete_order(order_id):
     session = SessionLocal()
@@ -132,7 +132,7 @@ def delete_order(order_id):
         return jsonify({"message": f"Order {order_id} deleted"}), 200
     except Exception as e:
         session.rollback()
-        logging.error(f"❌ Error deleting order: {e}")
+        logging.error(f"Error deleting order: {e}")
         return jsonify({"error": str(e)}), 400
     finally:
         session.close()

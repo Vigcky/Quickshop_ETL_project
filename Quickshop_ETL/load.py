@@ -22,11 +22,11 @@ def write_to_db(df, if_exists="replace"):
 
         session.add_all(records)
         session.commit()
-        logging.info(f"✅ Wrote {len(records)} records to orders_transformed")
+        logging.info(f"Wrote {len(records)} records to orders_transformed")
 
     except Exception as e:
         session.rollback()
-        logging.error(f"❌ DB insert failed: {e}")
+        logging.error(f" DB insert failed: {e}")
         raise
     finally:
         session.close()

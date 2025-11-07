@@ -9,6 +9,5 @@ def test_order_total_calculation(sample_orders):
 
 def test_invalid_data_handling(invalid_orders):
     transformed = transform_orders(invalid_orders)
-    # Ensure invalid rows are dropped or handled gracefully
     assert all(transformed["qty"] > 0)
     assert all(transformed["unit_price"] > 0)

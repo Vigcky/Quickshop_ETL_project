@@ -5,7 +5,6 @@ from pathlib import Path
 
 
 def test_find_order_files(tmp_path):
-    """Ensure find_order_files picks up CSVs in range."""
     csv_file = tmp_path / "orders_20251101.csv"
     csv_file.write_text("order_id,product_id,qty,unit_price,order_date\n1,101,2,100.0,2025-11-01\n")
 
@@ -15,7 +14,6 @@ def test_find_order_files(tmp_path):
 
 
 def test_read_orders_valid(tmp_path):
-    """Ensure read_orders loads valid CSVs properly."""
     f = tmp_path / "orders_20251101.csv"
     f.write_text("order_id,product_id,qty,unit_price,order_date\n1,101,2,100.0,2025-11-01\n")
     df = read_orders([f])
@@ -24,7 +22,6 @@ def test_read_orders_valid(tmp_path):
 
 
 def test_read_orders_no_files(caplog):
-    """Ensure read_orders handles empty file list gracefully."""
     caplog.set_level("WARNING")
     df = read_orders([])
     assert df.empty
