@@ -1,9 +1,14 @@
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
+from .db import engine
 import pandas as pd
 
-def run_sql(sql, db_url="sqlite:///quickshop.db"):
-    engine = create_engine(db_url)
-    with engine.begin() as conn:
-        res = conn.execute(text(sql))
-        df = pd.DataFrame(res.fetchall(), columns=res.keys())
+def fetch_sales_summary():
+    query = text("""
+        SELECT order_date, SUM(order_total) AS total_sales
+        FROM orders_transformed
+        GROUP BY order_date
+        ORDER BY order_date;
+    """)
+    with engine.connect() as conn:
+        df = pd.read_sql(query, conn)
     return df

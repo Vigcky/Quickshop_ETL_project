@@ -1,12 +1,14 @@
-import pandas as pd
-from Quickshop_ETL.transform import apply_transformations
+import pytest
+from Quickshop_ETL.transform import transform_orders
 
 def test_order_total_calculation(sample_orders):
-    df = apply_transformations(sample_orders)
-    assert "order_total" in df.columns
-    assert df["order_total"].tolist() == [200.0, 150.0]
+    transformed = transform_orders(sample_orders)
+    assert "order_total" in transformed.columns
+    assert transformed.loc[0, "order_total"] == 100.0
+    assert transformed.loc[1, "order_total"] == 80.0
 
 def test_invalid_data_handling(invalid_orders):
-    """Ensure invalid rows are dropped or handled gracefully."""
-    df = apply_transformations(invalid_orders)
-    assert not df.empty or isinstance(df, pd.DataFrame)
+    transformed = transform_orders(invalid_orders)
+    # Ensure invalid rows are dropped or handled gracefully
+    assert all(transformed["qty"] > 0)
+    assert all(transformed["unit_price"] > 0)

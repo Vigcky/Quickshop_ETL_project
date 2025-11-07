@@ -1,15 +1,14 @@
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
 from typing import Optional
+from datetime import date
 
 class OrderRecord(BaseModel):
-    order_id: str = Field(..., min_length=1)
-    customer_id: str
-    order_date: datetime
-    product_id: str
+    order_id: Optional[int] = None
+    product_id: int
     qty: int
     unit_price: float
-    order_total: Optional[float] = None
+    order_date: date
 
     @field_validator("qty")
     @classmethod
