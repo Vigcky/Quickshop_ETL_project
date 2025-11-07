@@ -1,4 +1,4 @@
-# 🚀 QuickShop ETL Project  
+## QuickShop ETL Project  
 
 End-to-end **ETL (Extract–Transform–Load)** pipeline for **QuickShop**, featuring:  
 ✅ Automated data ingestion from CSV  
@@ -11,7 +11,7 @@ End-to-end **ETL (Extract–Transform–Load)** pipeline for **QuickShop**, feat
 
 ---
 
-## 🧭 Overview  
+## Overview  
 
 This project simulates a production-grade **data engineering workflow** for an e-commerce platform.  
 The pipeline extracts raw order, product, and inventory data from CSVs, validates and transforms it, and loads it into a PostgreSQL database or Parquet files.  
@@ -20,7 +20,7 @@ The pipeline extracts raw order, product, and inventory data from CSVs, validate
 
 ---
 
-## 🧩 Features  
+## Features  
 
 | Component | Description |
 |------------|-------------|
@@ -37,7 +37,7 @@ The pipeline extracts raw order, product, and inventory data from CSVs, validate
 
 
 
-## 🏗️ Architecture
+## Architecture
 
            ┌──────────────────────────┐
            │        CSV Input          │
@@ -59,81 +59,17 @@ The pipeline extracts raw order, product, and inventory data from CSVs, validate
              [SQL Analytical Reports]
 
 
-           ┌──────────────────────────┐
-           │        CSV Input          │
-           │  (orders, products, inv)  │
-           └────────────┬──────────────┘
-                        │
-                [Extract: Pandas]
-                        │
-                [Transform: Pydantic]
-                        │
-                [Load: PostgreSQL/Parquet]
-                        │
-   ┌────────────────────┴────────────────────┐
-   │                                         │
-   │     [Airflow DAGs]      [Flask API]     │
-   │   (Daily Automation)   (CRUD + Query)   │
-   └────────────────────┬────────────────────┘
-                        │
-             [SQL Analytical Reports]
+## Setup Options  
 
+### Option 1 — Manual Setup (Recommended for Local Testing)
 
-
-
-## 📂 Project Structure  
-
-Quickshop_ETL_Project/
-├── Quickshop_ETL/
-│ ├── extract.py
-│ ├── transform.py
-│ ├── load.py
-│ ├── schema.py
-│ ├── analytics.py
-│ └── init.py
-│
-├── dags/
-│ └── quickshop_daily_pipeline.py
-│
-├── sql/
-│ ├── daily_revenue.sql
-│ ├── product_performance.sql
-│ ├── inventory_alerts.sql
-│ └── cohort_retention.sql
-│
-├── data/
-│ ├── products.csv
-│ ├── inventory.csv
-│ └── orders_20251101.csv
-│
-├── tests/
-│ ├── test_extract.py
-│ ├── test_transform.py
-│ ├── test_load.py
-│ └── conftest.py
-│
-├── run_etl.py
-├── docker-compose.yaml
-├── Dockerfile
-├── requirements.txt
-├── init.sql
-└── README.md
-
-
-
----
-
-## ⚙️ Setup Options  
-
-### 🧪 Option 1 — Manual Setup (Recommended for Local Testing)
-
-#### 1. Install dependencies  
+#### **1. Install dependencies  **
 
 uv sync
-# or with pip
+or with pip
 pip install -r requirements.txt
 
-**2. Create PostgreSQL database**
+####**2. Create PostgreSQL database**
 
 psql -U postgres
 CREATE DATABASE quickshop;
