@@ -1,0 +1,6 @@
+product_id,stock_qty,warehouse
+101,120,WH1
+102,75,WH2
+103,250,WH1
+104,60,WH3
+105,300,WH1
