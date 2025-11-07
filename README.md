@@ -39,24 +39,25 @@ The pipeline extracts raw order, product, and inventory data from CSVs, validate
 
 ## Architecture
 
-           ┌──────────────────────────┐
-           │        CSV Input          │
-           │  (orders, products, inv)  │
-           └────────────┬──────────────┘
-                        │
-                [Extract: Pandas]
-                        │
-                [Transform: Pydantic]
-                        │
-                [Load: PostgreSQL/Parquet]
-                        │
-   ┌────────────────────┴────────────────────┐
-   │                                         │
-   │     [Airflow DAGs]      [Flask API]     │
-   │   (Daily Automation)   (CRUD + Query)   │
-   └────────────────────┬────────────────────┘
-                        │
-             [SQL Analytical Reports]
+       ┌──────────────────────────┐
+│        CSV Input          │
+│  (orders, products, inv)  │
+└─────────┬──────────────┘
+│
+[Extract: Pandas]
+│
+[Transform: Pydantic]
+│
+[Load: PostgreSQL/Parquet]
+│
+┌────────────────────┴────────────────────┐
+│                                         │
+│     [Airflow DAGs]      [Flask API]     │
+│   (Daily Automation)   (CRUD + Query)   │
+└────────────────────┬────────────────────┘
+│
+[SQL Analytical Reports]
+
 
 
 ## Setup Options  
